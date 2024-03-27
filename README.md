@@ -15,7 +15,7 @@ The .NET is a Framework, which is a collection of classes of reusable libraries 
 - Services-oriented applications using Windows Communications Foundation (WCF)
 - Workflow-enabled applications using Windows Workflow Foundation(WF)
 
-**1.What is .Net Core ? Can you explain core feature of it ?**
+**2.What is .Net Core ? Can you explain core feature of it ?**
 
 Ans
 
@@ -72,6 +72,32 @@ deployments.
 - Support for Modern Development Practices:
     - .NET: Limited support for modern development practices like containerization, serverless computing, and microservices architecture.
     - .NET Core: Built with modern development practices in mind, .NET Core seamlessly integrates with container orchestrators like Kubernetes, supports serverless computing models, and is optimized for microservices architecture
+
+
+**3. What is Application Domain (AppDomain) in .NET ?**
+
+Ans: https://learn.microsoft.com/en-us/dotnet/framework/app-domains/application-domains
+
+In the context of the .NET framework, an "application domain" (often abbreviated as "AppDomain") is a lightweight process that serves as an isolated environment in which applications run. It provides a level of isolation, security, and control over the execution of managed code within a process. Each .NET application typically runs within its own application domain.
+
+Here are some key points about application domains:
+
+- _Isolation_: Application domains provide a level of isolation between applications running within the same process. This isolation helps prevent faults or exceptions in one application from affecting others.
+
+- _Security_: AppDomains can be configured with different security policies, allowing administrators to control the permissions and resources available to the code running within each domain.
+
+- _Resource_ _Management_: They allow for efficient resource management within a process. Resources such as memory, threads, and file handles can be allocated and managed independently for each application domain.
+
+- _Unloadability_: Application domains can be unloaded independently, allowing for the dynamic loading and unloading of components within a running process without affecting other components.
+
+- _Versioning_: They can help with versioning and updating of components. Different versions of assemblies can be loaded into separate application domains within the same process, allowing multiple versions to coexist without conflicts.
+
+Overall, application domains provide a flexible and secure way to host and manage multiple .NET applications within a single process, enhancing the scalability, reliability, and security of .NET applications.
+
+
+
+
+
 
 
 
