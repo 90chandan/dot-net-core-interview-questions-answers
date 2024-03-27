@@ -1,5 +1,20 @@
 # dot-net-core-interview-questions-answers
 
+**1: What is the .NET Framework?**
+
+Ans
+
+The .NET is a Framework, which is a collection of classes of reusable libraries given by Microsoft to be used in other .NET applications and to develop, build and deploy many types of applications on the Windows platform including the following:
+
+- Console Applications
+- Windows Forms Applications
+- Windows Presentation Foundation (WPF) Applications
+- Web Applications
+- Web Services
+- Windows Services
+- Services-oriented applications using Windows Communications Foundation (WCF)
+- Workflow-enabled applications using Windows Workflow Foundation(WF)
+
 **1.What is .Net Core ? Can you explain core feature of it ?**
 
 Ans
