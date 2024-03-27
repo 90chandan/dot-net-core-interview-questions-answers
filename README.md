@@ -1,6 +1,29 @@
 # dot-net-core-interview-questions-answers
 
-**1. What is difference between .Net and .Net Core ? Advantages on .Net Core over .Net? 
+**1.What is .Net Core ? Can you explain core feature of it ?**
+
+Ans
+
+.NET Core is an open-source, cross-platform framework developed by Microsoft for building various types of applications, including web applications, services, and command-line tools. It's a successor to the .NET Framework and provides several advantages over its predecessor, including improved performance, better modularity, and broader platform support.
+
+Some core features of .NET Core include:
+
+- _Cross-Platform_ _Support_: .NET Core is designed to run on multiple platforms, including Windows, macOS, and various distributions of Linux. This allows developers to write code once and run it on different operating systems without modification.
+
+_High_ _Performance_: .NET Core offers significant performance improvements over the traditional .NET Framework, thanks to various optimizations and enhancements. It includes features like just-in-time (JIT) compilation, which compiles code into native machine instructions at runtime for faster execution.
+
+_Modularity_: .NET Core is built with modularity in mind, allowing developers to include only the necessary components in their applications. This helps reduce the size of the application and improve its performance.
+
+_Command-Line_ _Tools_: .NET Core provides a set of command-line tools that streamline various development tasks, such as project creation, building, testing, and deployment. These tools are platform-agnostic and can be used across different operating systems.
+
+_Unified_ _API_: .NET Core provides a unified API surface across different platforms, ensuring consistent behavior and reducing compatibility issues when targeting multiple environments.
+
+_Open-Source_: .NET Core is fully open-source, meaning that its source code is publicly available and can be freely modified and distributed. This allows the community to contribute improvements, fix bugs, and add new features to the framework.
+
+_Support_ _for_ _Modern_ _Workloads_: .NET Core is well-suited for building modern cloud-native applications, microservices, and containerized workloads. It provides integration with popular tools and frameworks used in modern development, such as Docker, Kubernetes, and Azure services.
+
+
+**2. What is difference between .Net and .Net Core ? Advantages on .Net Core over .Net? 
 
 Ans
 - Architecture:
