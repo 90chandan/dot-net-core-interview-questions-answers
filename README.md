@@ -95,6 +95,57 @@ Here are some key points about application domains:
 Overall, application domains provide a flexible and secure way to host and manage multiple .NET applications within a single process, enhancing the scalability, reliability, and security of .NET applications.
 
 
+**3. Explain Middle Ware in .Net Core ?**
+
+Ans
+
+-In ASP.NET Core, middleware components are software components that are added to the application pipeline to handle requests and responses. 
+- Middleware sits between the client and the server and can perform various tasks such as authentication, logging, error handling, etc. 
+- Middleware components are executed in the order they are added to the pipeline, and each component can choose to pass the request to the next middleware or terminate the request.
+
+Here's an example of a custom middleware in ASP.NET Core:
+```
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Threading.Tasks;
+
+public class CustomMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public CustomMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        // Do something before the request reaches the next middleware
+        Console.WriteLine("CustomMiddleware executing before the next middleware.");
+
+        // Call the next middleware in the pipeline
+        await _next(context);
+
+        // Do something after the request has been processed by the next middleware
+        Console.WriteLine("CustomMiddleware executing after the next middleware.");
+    }
+}
+
+public static class CustomMiddlewareExtensions
+{
+    public static IApplicationBuilder UseCustomMiddleware(this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<CustomMiddleware>();
+    }
+}
+
+```
+    - In this example, _'CustomMiddleware'_ is a custom middleware component. It contains an _InvokeAsync_ method that accepts an _HttpContext_ object and a _RequestDelegate_ representing the next middleware in the pipeline. 
+    - Inside the _'InvokeAsync'_ method, you can execute code before and after calling the _next_ middleware using the _next delegate.
+
+
+
 
 
 
