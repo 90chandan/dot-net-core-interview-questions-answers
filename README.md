@@ -144,7 +144,20 @@ public static class CustomMiddlewareExtensions
     - In this example, _'CustomMiddleware'_ is a custom middleware component. It contains an _InvokeAsync_ method that accepts an _HttpContext_ object and a _RequestDelegate_ representing the next middleware in the pipeline. 
     - Inside the _'InvokeAsync'_ method, you can execute code before and after calling the _next_ middleware using the _next delegate.
 
+To use this middleware in your ASP.NET Core application, you need to add it to the application pipeline in the Configure method of the Startup class:
+```
+public class Startup
+{
+    public void Configure(IApplicationBuilder app)
+    {
+        app.UseCustomMiddleware();
 
+        // Other middleware configurations
+    }
+}
+
+```
+Now, whenever a request is made to your ASP.NET Core application, it will pass through the CustomMiddleware, and you can execute custom code before and after each request is processed by other middleware components in the pipeline.
 
 
 
