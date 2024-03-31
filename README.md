@@ -160,6 +160,164 @@ public class Startup
 Now, whenever a request is made to your ASP.NET Core application, it will pass through the CustomMiddleware, and you can execute custom code before and after each request is processed by other middleware components in the pipeline.
 
 
+**5. Explain Exception Handling in .Net Core Api ?**
+
+Ans : https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-8.0
+
+- **1. Developer Exception Page:**
+During development, it's often helpful to see detailed error information directly in the browser. The DeveloperExceptionPage middleware provides an error page with stack traces, exception details, and other debugging information.
+
+    1. In Program.cs, call UseExceptionHandler to add the Exception Handling Middleware:
+    ```
+    var app = builder.Build();
+
+    app.UseHttpsRedirection();
+
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseExceptionHandler("/error");
+    }
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+    ```
+    2. Configure a controller action to respond to the /error route:
+
+    ```
+    [Route("/error")]
+    public IActionResult HandleError() =>
+        Problem();
+    ```
+    3. Error raised from controller
+    ```
+    [HttpGet("Throw")]
+    public IActionResult Throw() =>
+        throw new Exception("Sample exception.");
+    ```
+    When the Developer Exception Page detects an unhandled exception, it generates a default plain-text response similar to the following example:
+
+- **2. Exception Handler Middleware:**
+The ExceptionHandler middleware allows you to handle exceptions globally in a more structured manner than the DeveloperExceptionPage. It catches unhandled exceptions and allows you to specify how to handle them, such as logging, returning a specific response, or redirecting to an error page.
+
+- 1. In Program.cs, register environment-specific Exception Handling Middleware instances:
+
+```
+if (app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/error-development");
+}
+else
+{
+    app.UseExceptionHandler("/error");
+}
+```
+2. Add controller actions for both the Development and non-Development routes:
+
+```
+[Route("/error-development")]
+public IActionResult HandleErrorDevelopment(
+    [FromServices] IHostEnvironment hostEnvironment)
+{
+    if (!hostEnvironment.IsDevelopment())
+    {
+        return NotFound();
+    }
+
+    var exceptionHandlerFeature =
+        HttpContext.Features.Get<IExceptionHandlerFeature>()!;
+
+    return Problem(
+        detail: exceptionHandlerFeature.Error.StackTrace,
+        title: exceptionHandlerFeature.Error.Message);
+}
+
+[Route("/error")]
+public IActionResult HandleError() =>
+    Problem();
+```
+
+**6. Explain Exception Filter in .Net Core ?**
+
+Ans
+
+In .NET Core, an exception filter is a feature provided by the MVC framework that allows you to centralize exception handling logic for controller actions or the entire controller. Exception filters are attributes that can be applied at the controller or action level to intercept exceptions thrown during the execution of MVC actions. They provide a way to handle exceptions globally or for specific controllers or actions.
+
+- **1. Deriving from ExceptionFilterAttribute:**
+To create an exception filter, you typically derive from the ExceptionFilterAttribute class and override the OnException method.
+
+```
+public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
+{
+    public override void OnException(ExceptionContext context)
+    {
+        // Handle the exception
+        var exception = context.Exception;
+        // Additional logic for logging, error response, etc.
+
+        // Call the base implementation to ensure other filters or the default handling continue
+        base.OnException(context);
+    }
+}
+
+```
+
+- **2. Registering the Exception Filter:**
+You can apply the exception filter attribute globally in the Startup class or selectively to specific controllers or actions by decorating them with the attribute.
+
+    - Global Registration:
+```
+services.AddControllers(options =>
+{
+    options.Filters.Add<CustomExceptionFilterAttribute>();
+});
+```
+    - Controller or Action Level:
+```
+[ServiceFilter(typeof(CustomExceptionFilterAttribute))]
+public class MyController : ControllerBase
+{
+    // Controller actions
+}
+
+```
+- **3. Handling Exceptions:**
+Inside the OnException method, you can access the ExceptionContext object, which provides information about the exception and the current HTTP context. You can perform logging, generate custom error responses, or perform any other necessary actions.
+
+**Example**
+
+```
+public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
+{
+    public override void OnException(ExceptionContext context)
+    {
+        var exception = context.Exception;
+        
+        // Log the exception
+        LogException(exception);
+
+        // Set the response status code
+        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        
+        // Return a custom error response
+        context.Result = new JsonResult(new { error = "An unexpected error occurred." });
+    }
+}
+
+Then, you can apply this filter globally in the Startup class:
+
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddControllers(options =>
+    {
+        options.Filters.Add<CustomExceptionFilterAttribute>();
+    });
+}
+
+```
 
 
 
